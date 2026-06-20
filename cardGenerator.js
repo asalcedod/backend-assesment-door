@@ -145,6 +145,22 @@ async function generateCards({
 
   const htmlFiles = []; // [{ doorId, filePath }]
 
+  // Logo: convertir a base64 si existe como archivo local, o dejar vacío
+  let logoHtml = "";
+  const logoCandidates = ["kaptivecp-logo-1.png", "logo.png", "logo.jpg", "logo.svg"];
+  for (const logoFile of logoCandidates) {
+    const logoPath = path.join(__dirname, logoFile);
+    if (fs.existsSync(logoPath)) {
+      const ext = path.extname(logoFile).toLowerCase();
+      const mime = ext === ".svg" ? "image/svg+xml" : ext === ".png" ? "image/png" : "image/jpeg";
+      const b64 = fs.readFileSync(logoPath).toString("base64");
+      logoHtml = `<img src="data:${mime};base64,${b64}" alt="KAPTIVE C&P" style="max-width:180px;max-height:80px;object-fit:contain;">`;
+      console.log(`✓ Logo cargado: ${logoFile}`);
+      break;
+    }
+  }
+  if (!logoHtml) console.log("⚠ Logo no encontrado, se dejará vacío");
+
   for (const row of rows) {
     const doorId = clean(row["ID Door"]);
     if (!doorId) continue;
@@ -156,6 +172,7 @@ async function generateCards({
 
     const replacements = {
       // Encabezado
+      "{{ LOGO }}":                                 logoHtml,
       "{{ PROJECT_NAME }}":                         projectName,
       "{{ GENERAL_CONTRACTOR }}":                   generalContractor,
       "{{ SUBCONTRACTOR }}":                        subcontractor,

@@ -1,287 +1,544 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ ID_DOOR }}_Historic Door Registration Card - KAPTIVE C&P</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @media print {
-            body { background-color: white; -webkit-print-color-adjust: exact; }
-            .no-print { display: none; }
-            .print-border { border-color: black !important; border-width: 1px !important; }
-            .shadow-lg { box-shadow: none !important; }
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>{{ ID_DOOR }}_Historic Door Registration Card - KAPTIVE C&P</title>
+<style>
+  /* ── Reset ──────────────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: ui-sans-serif, system-ui, Arial, sans-serif;
+    font-size: 14px;
+    color: #111827;
+    background-color: #f3f4f6;
+    padding: 32px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Outer card ─────────────────────────────────────────────────────── */
+  .card {
+    max-width: 960px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 4px 20px rgba(0,0,0,.12);
+    padding: 32px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     HEADER
+  ════════════════════════════════════════════════════════════════════ */
+  header {
+    border: 2px solid #0a3a70;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Row 1: titles + logo */
+  .hdr-row1 {
+    display: flex;
+    border-bottom: 2px solid #0a3a70;
+  }
+  .hdr-titles {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hdr-titles h1 {
+    font-size: 26px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #0a3a70;
+    line-height: 1.1;
+  }
+  .hdr-titles h2 {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #4a4c50;
+    letter-spacing: .05em;
+    margin-top: 2px;
+  }
+  .hdr-badge-wrap { margin-top: 8px; }
+  .hdr-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #0a3a70;
+    background: #f3f4f6;
+    border: 1px solid #0a3a70;
+    padding: 3px 12px;
+  }
+  .hdr-logo {
+    width: 220px;
+    border-left: 2px solid #0a3a70;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+  }
+  .hdr-logo img { max-width: 180px; max-height: 80px; object-fit: contain; }
+
+  /* Row 2: project meta + element ID */
+  .hdr-row2 { display: flex; }
+  .hdr-meta {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-right: 2px solid #0a3a70;
+  }
+  .meta-cell {
+    padding: 10px 12px;
+    background: #f9fafb;
+    border-right: 2px solid #0a3a70;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .meta-cell:last-child { border-right: none; }
+  .meta-lbl {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #0a3a70;
+    letter-spacing: .07em;
+    margin-bottom: 3px;
+  }
+  .meta-val {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #111827;
+  }
+  .hdr-id {
+    width: 220px;
+    padding: 10px 14px;
+    background: rgba(10,58,112,.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .id-lbl {
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #0a3a70;
+    letter-spacing: .06em;
+  }
+  .id-val {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0a3a70;
+    background: #fff;
+    border: 2px solid #0a3a70;
+    padding: 4px 10px;
+    min-width: 110px;
+    text-align: center;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.1);
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     TABULAR BODY
+  ════════════════════════════════════════════════════════════════════ */
+  .body-wrap {
+    border: 2px solid #0a3a70;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+
+  /* Section header bar */
+  .sec-bar {
+    background: #0a3a70;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: 6px 12px;
+    border-bottom: 2px solid #0a3a70;
+  }
+
+  /* Field label / value */
+  .f-lbl {
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #0a3a70;
+    letter-spacing: .07em;
+    margin-bottom: 4px;
+  }
+  .f-lbl-gray { color: #6b7280; }
+  .f-val {
+    display: block;
+    font-size: 12px;
+    color: #111827;
+    border-bottom: 1px solid #9ca3af;
+    padding-bottom: 2px;
+    min-height: 18px;
+    width: 100%;
+  }
+  .f-val-center { text-align: center; font-weight: 700; }
+  .f-val-tall   { min-height: 96px; }
+  .f-val-tall2  { min-height: 64px; }
+
+  /* ── 01 Location ──────────────────────────────────────── */
+  .loc-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 2px solid #0a3a70;
+    background: #f9fafb;
+  }
+  .loc-cell { padding: 12px; border-right: 2px solid #0a3a70; }
+  .loc-cell:last-child { border-right: none; }
+
+  /* ── 02 Field Notes ───────────────────────────────────── */
+  .notes-row {
+    display: flex;
+    border-bottom: 2px solid #0a3a70;
+  }
+  .notes-attrs {
+    width: 33.33%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-right: 2px solid #0a3a70;
+    background: #f9fafb;
+  }
+  .attr-cell {
+    padding: 10px 12px;
+    border-right: 1px solid #d1d5db;
+    border-bottom: 1px solid #d1d5db;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .attr-cell:nth-child(2n)   { border-right: none; }
+  .attr-cell:nth-last-child(-n+2) { border-bottom: none; }
+  .notes-cols {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: #fff;
+  }
+  .note-cell { padding: 10px 12px; border-right: 1px solid #d1d5db; }
+  .note-cell:last-child { border-right: none; }
+
+  /* ── 03 & 04 Assessment + Photo ───────────────────────── */
+  .assess-row {
+    display: flex;
+    border-bottom: 2px solid #0a3a70;
+  }
+  .assess-half {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #0a3a70;
+  }
+  .assess-half:last-child { border-right: none; }
+  .assess-body {
+    flex: 1;
+    padding: 12px;
+    background: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .score-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .photo-body { flex: 1; padding: 8px; background: #fff; }
+
+  /* ── Component Inventory ──────────────────────────────── */
+  .comp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .comp-col {
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #0a3a70;
+  }
+  .comp-col:last-child { border-right: none; }
+  .comp-item {
+    padding: 10px 12px;
+    border-bottom: 2px solid #0a3a70;
+    background: #fff;
+  }
+  .comp-item:last-child { border-bottom: none; }
+  .comp-title {
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #0a3a70;
+    margin-bottom: 8px;
+  }
+  .comp-fields { display: flex; gap: 16px; }
+  .cf-narrow { width: 35%; }
+  .cf-wide   { flex: 1; }
+
+  /* ════════════════════════════════════════════════════════════════════
+     FOOTER
+  ════════════════════════════════════════════════════════════════════ */
+  footer {
+    margin-top: 16px;
+    padding-top: 8px;
+    border-top: 2px solid #0a3a70;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .foot-left { font-size: 11px; color: #6b7280; line-height: 1.7; }
+  .foot-brand { font-weight: 700; color: #0a3a70; }
+  .foot-right { font-size: 11px; color: #9ca3af; font-style: italic; text-align: right; line-height: 1.7; }
+
+  /* ── Print ─────────────────────────────────────────────── */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card { box-shadow: none; max-width: 100%; }
+  }
+</style>
 </head>
-<body class="bg-gray-100 text-gray-900 font-sans p-4 md:p-8">
+<body>
+<div class="card">
 
-    <!-- Main Form Container -->
-    <div class="max-w-5xl mx-auto bg-white p-8 shadow-lg print-border border border-gray-300">
-        
-        <!-- Header Section (Technical Title Block) -->
-        <header class="border-2 border-[#0a3a70] print:border-black mb-6 flex flex-col">
-            <!-- Row 1: Titles & Logo -->
-            <div class="flex flex-col md:flex-row border-b-2 border-[#0a3a70] print:border-black">
-                <!-- Titles -->
-                <div class="flex-1 p-4 flex flex-col justify-center">
-                    <h1 class="text-2xl md:text-3xl font-black uppercase tracking-widest text-[#0a3a70] print:text-black leading-tight">Conservation Data Sheet</h1>
-                    <h2 class="text-lg font-bold uppercase text-[#4a4c50] print:text-gray-700 tracking-wider">As-Built</h2>
-                    <div class="mt-2">
-                        <h3 class="text-sm font-bold uppercase text-[#0a3a70] print:text-black bg-gray-100 print:bg-gray-200 inline-block px-3 py-1 border border-[#0a3a70] print:border-black">Historic Door Registration Card</h3>
-                    </div>
-                </div>
-                <!-- Logo -->
-                <div class="w-full md:w-64 border-t-2 md:border-t-0 md:border-l-2 border-[#0a3a70] print:border-black p-4 flex items-center justify-center bg-white">
-                    {{ LOGO }}
-                </div>
-            </div>
-
-            <!-- Row 2: Project Info & Element ID -->
-            <div class="flex flex-col md:flex-row">
-                <!-- Project details -->
-                <div class="flex-1 grid grid-cols-1 md:grid-cols-3 divide-y-2 md:divide-y-0 md:divide-x-2 divide-[#0a3a70] print:divide-black border-b-2 md:border-b-0 md:border-r-2 border-[#0a3a70] print:border-black">
-                    <div class="p-3 flex flex-col justify-center bg-gray-50 print:bg-transparent">
-                        <label class="text-[10px] font-bold uppercase text-[#0a3a70] print:text-black leading-none mb-1">Project</label>
-                        <span class="font-bold text-sm text-gray-900 uppercase">{{ PROJECT_NAME }}</span>
-                    </div>
-                    <div class="p-3 flex flex-col justify-center bg-gray-50 print:bg-transparent">
-                        <label class="text-[10px] font-bold uppercase text-[#0a3a70] print:text-black leading-none mb-1">General Contractor</label>
-                        <span class="font-bold text-sm text-gray-900 uppercase">{{ GENERAL_CONTRACTOR }}</span>
-                    </div>
-                    <div class="p-3 flex flex-col justify-center bg-gray-50 print:bg-transparent">
-                        <label class="text-[10px] font-bold uppercase text-[#0a3a70] print:text-black leading-none mb-1">Subcontractor</label>
-                        <span class="font-bold text-sm text-gray-900 uppercase">{{ SUBCONTRACTOR }}</span>
-                    </div>
-                </div>
-                <!-- Element ID -->
-                <div class="w-full md:w-64 p-3 bg-[#0a3a70]/10 print:bg-gray-100 flex items-center justify-between">
-                    <label class="text-xs font-black uppercase text-[#0a3a70] print:text-black mr-2">Element ID</label>
-                    <div class="flex items-center text-lg font-bold bg-white border-2 border-[#0a3a70] print:border-black px-2 py-1 w-32 shadow-inner">
-                        <span class="text-[#0a3a70] print:text-black font-bold uppercase">{{ ID_DOOR }}</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- START TABULAR BODY -->
-        <div class="border-2 border-[#0a3a70] print:border-black flex flex-col mb-4">
-
-            <!-- 01. LOCATION -->
-            <div class="bg-[#0a3a70] print:bg-gray-200 text-white print:text-black p-1 border-b-2 border-[#0a3a70] print:border-black px-3">
-                <h4 class="font-bold uppercase text-sm tracking-wide">01. Location &amp; Site Logic</h4>
-            </div>
-            <div class="grid grid-cols-2 divide-x-2 divide-[#0a3a70] print:divide-black border-b-2 border-[#0a3a70] print:border-black bg-gray-50 print:bg-white">
-                <div class="p-3">
-                    <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Inspection Level</label>
-                    <p class="w-full pb-1 text-sm border-b border-gray-400">{{ INSPECTION_LEVEL }}</p>
-                </div>
-                <div class="p-3">
-                    <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Room/Area</label>
-                    <p class="w-full pb-1 text-sm border-b border-gray-400">{{ ROOM_NAME }}</p>
-                </div>
-            </div>
-
-            <!-- 02. FIELD NOTES & PATHOLOGIES -->
-            <div class="bg-[#0a3a70] print:bg-gray-200 text-white print:text-black p-1 border-b-2 border-[#0a3a70] print:border-black px-3">
-                <h4 class="font-bold uppercase text-sm tracking-wide">02. Field Notes &amp; Pathologies</h4>
-            </div>
-            <div class="flex flex-col md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-[#0a3a70] print:divide-black border-b-2 border-[#0a3a70] print:border-black">
-                <!-- Attributes -->
-                <div class="w-full md:w-1/3 grid grid-cols-2 divide-x border-t-0 border-gray-300 bg-gray-50 print:bg-white">
-                    <div class="p-3 flex flex-col justify-center">
-                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Access Status</label>
-                        <p class="w-full pb-1 text-sm border-b border-gray-400">{{ ACCESS_STATUS }}</p>
-                    </div>
-                    <div class="p-3 flex flex-col justify-center">
-                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Door Origin</label>
-                        <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_ORIGIN }}</p>
-                    </div>
-                    <div class="p-3 flex flex-col justify-center border-t border-gray-300">
-                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Material</label>
-                        <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_MATERIAL }}</p>
-                    </div>
-                    <div class="p-3 flex flex-col justify-center border-t border-gray-300">
-                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Door Type</label>
-                        <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_TYPE }}</p>
-                    </div>
-                </div>
-                <!-- Notes -->
-                <div class="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x border-gray-300 bg-white">
-                    <div class="p-3">
-                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Door - Notes</label>
-                        <p class="w-full min-h-[6rem] text-sm border-b border-gray-400">{{ DOOR_NOTES }}</p>
-                    </div>
-                    <div class="p-3">
-                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Frame - Notes</label>
-                        <p class="w-full min-h-[6rem] text-sm border-b border-gray-400">{{ FRAME_NOTES }}</p>
-                    </div>
-                    <div class="p-3">
-                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Transom - Notes</label>
-                        <p class="w-full min-h-[6rem] text-sm border-b border-gray-400">{{ TRANSOM_NOTES }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 03 & 04. ASSESSMENT & EVIDENCE -->
-            <div class="flex flex-col md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-[#0a3a70] print:divide-black border-b-2 border-[#0a3a70] print:border-black">
-                <div class="w-full md:w-1/2 flex flex-col">
-                    <div class="bg-[#0a3a70] print:bg-gray-200 text-white print:text-black p-1 border-b-2 border-[#0a3a70] print:border-black px-3">
-                        <h4 class="font-bold uppercase text-sm tracking-wide">03. Assessment &amp; Severity</h4>
-                    </div>
-                    <div class="p-3 flex-1 flex flex-col gap-2 bg-gray-50 print:bg-white">
-                        <div>
-                            <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Technical Notes</label>
-                            <p class="w-full min-h-[4rem] text-sm border-b border-gray-400">{{ TECHNICAL_NOTES }}</p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 mt-auto pt-2">
-                            <div>
-                                <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Assigned Priority</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400 text-center font-bold">{{ PRIORITY }}</p>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Evaluation Score</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400 text-center font-bold">{{ EVALUATION_SCORE }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full md:w-1/2 flex flex-col">
-                    <div class="bg-[#0a3a70] print:bg-gray-200 text-white print:text-black p-1 border-b-2 border-[#0a3a70] print:border-black px-3">
-                        <h4 class="font-bold uppercase text-sm tracking-wide">04. Field Photo / Evidence</h4>
-                    </div>
-                    <div class="p-2 flex-1 bg-white">
-                        {{ PHOTO }}
-                    </div>
-                </div>
-            </div>
-
-            <!-- COMPONENTS 5-10 -->
-            <div class="bg-[#0a3a70] print:bg-gray-200 text-white print:text-black p-1 border-b-2 border-[#0a3a70] print:border-black px-3">
-                <h4 class="font-bold uppercase text-sm tracking-wide">Component Inventory</h4>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 divide-y-2 md:divide-y-0 md:divide-x-2 divide-[#0a3a70] print:divide-black">
-                
-                <!-- Left Col -->
-                <div class="flex flex-col divide-y-2 divide-[#0a3a70] print:divide-black">
-
-                    <!-- 5. Door -->
-                    <div class="p-3 bg-white">
-                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">5. Door</h5>
-                        <div class="flex gap-4">
-                            <div class="w-1/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_CURRENT_STATUS }}</p>
-                            </div>
-                            <div class="w-2/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Recommended Action</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_RECOMMENDED_ACTION }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 7. Hinges -->
-                    <div class="p-3 bg-white">
-                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">7. Hinges</h5>
-                        <div class="flex gap-4">
-                            <div class="w-1/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ HINGES_CURRENT_STATUS }}</p>
-                            </div>
-                            <div class="w-2/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Recommended Action</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ HINGES_RECOMMENDED_ACTION }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 9. Door Handle -->
-                    <div class="p-3 bg-white">
-                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">9. Door Handle</h5>
-                        <div class="flex gap-4">
-                            <div class="w-1/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_HANDLE_CURRENT_STATUS }}</p>
-                            </div>
-                            <div class="w-2/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Recommended Action</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_HANDLE_RECOMMENDED_ACTION }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Right Col -->
-                <div class="flex flex-col divide-y-2 divide-[#0a3a70] print:divide-black border-t-2 md:border-t-0 border-[#0a3a70] print:border-black">
-
-                    <!-- 6. Frame -->
-                    <div class="p-3 bg-white">
-                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">6. Frame</h5>
-                        <div class="flex gap-4">
-                            <div class="w-1/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ FRAME_CURRENT_STATUS }}</p>
-                            </div>
-                            <div class="w-2/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Recommended Action</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ FRAME_RECOMMENDED_ACTION }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 8. Transom -->
-                    <div class="p-3 bg-white">
-                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">8. Transom</h5>
-                        <div class="flex gap-4">
-                            <div class="w-1/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ TRANSOM_CURRENT_STATUS }}</p>
-                            </div>
-                            <div class="w-2/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Recommended Action / Function</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ TRANSOM_RECOMMENDED_ACTION }} / {{ TRANSOM_FUNCTION }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 10. Automatic Closing Arm -->
-                    <div class="p-3 bg-white">
-                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">10. Automatic Closing Arm</h5>
-                        <div class="flex gap-4">
-                            <div class="w-1/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ AUTOMATIC_CLOSING_ARM_CURRENT_STATUS }}</p>
-                            </div>
-                            <div class="w-2/3">
-                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Date of Preparation</label>
-                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DATE_OF_PREPARATION }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <!-- Row 1 -->
+    <div class="hdr-row1">
+      <div class="hdr-titles">
+        <h1>Conservation Data Sheet</h1>
+        <h2>As-Built</h2>
+        <div class="hdr-badge-wrap">
+          <span class="hdr-badge">Historic Door Registration Card</span>
         </div>
-        <!-- END TABULAR BODY -->
-
-        <!-- Footer -->
-        <footer class="mt-4 pt-2 border-t-2 border-[#0a3a70] print:border-black flex justify-between items-end text-sm">
-            <div class="text-xs text-gray-500">
-                <p class="font-bold text-[#0a3a70]">KAPTIVE C&amp;P</p>
-                <p>700 S Flower St. Suite 1000</p>
-                <p>Los Angeles, CA 90017</p>
-                <p>License #1031892</p>
-            </div>
-            <div class="text-xs text-gray-400 italic text-right">
-                <p>www.kaptivecp.com</p>
-                <p class="mt-1">Date of Preparation: {{ DATE_OF_PREPARATION }}</p>
-            </div>
-        </footer>
-
+      </div>
+      <div class="hdr-logo">{{ LOGO }}</div>
     </div>
 
+    <!-- Row 2 -->
+    <div class="hdr-row2">
+      <div class="hdr-meta">
+        <div class="meta-cell">
+          <span class="meta-lbl">Project</span>
+          <span class="meta-val">{{ PROJECT_NAME }}</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-lbl">General Contractor</span>
+          <span class="meta-val">{{ GENERAL_CONTRACTOR }}</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-lbl">Subcontractor</span>
+          <span class="meta-val">{{ SUBCONTRACTOR }}</span>
+        </div>
+      </div>
+      <div class="hdr-id">
+        <span class="id-lbl">Element ID</span>
+        <span class="id-val">{{ ID_DOOR }}</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ TABULAR BODY ═══ -->
+  <div class="body-wrap">
+
+    <!-- 01. Location & Site Logic -->
+    <div class="sec-bar">01. Location &amp; Site Logic</div>
+    <div class="loc-row">
+      <div class="loc-cell">
+        <span class="f-lbl">Inspection Level</span>
+        <span class="f-val">{{ INSPECTION_LEVEL }}</span>
+      </div>
+      <div class="loc-cell">
+        <span class="f-lbl">Room/Area</span>
+        <span class="f-val">{{ ROOM_NAME }}</span>
+      </div>
+    </div>
+
+    <!-- 02. Field Notes & Pathologies -->
+    <div class="sec-bar">02. Field Notes &amp; Pathologies</div>
+    <div class="notes-row">
+      <div class="notes-attrs">
+        <div class="attr-cell">
+          <span class="f-lbl">Access Status</span>
+          <span class="f-val">{{ ACCESS_STATUS }}</span>
+        </div>
+        <div class="attr-cell">
+          <span class="f-lbl">Door Origin</span>
+          <span class="f-val">{{ DOOR_ORIGIN }}</span>
+        </div>
+        <div class="attr-cell">
+          <span class="f-lbl">Material</span>
+          <span class="f-val">{{ DOOR_MATERIAL }}</span>
+        </div>
+        <div class="attr-cell">
+          <span class="f-lbl">Door Type</span>
+          <span class="f-val">{{ DOOR_TYPE }}</span>
+        </div>
+      </div>
+      <div class="notes-cols">
+        <div class="note-cell">
+          <span class="f-lbl">Door - Notes</span>
+          <span class="f-val f-val-tall">{{ DOOR_NOTES }}</span>
+        </div>
+        <div class="note-cell">
+          <span class="f-lbl">Frame - Notes</span>
+          <span class="f-val f-val-tall">{{ FRAME_NOTES }}</span>
+        </div>
+        <div class="note-cell">
+          <span class="f-lbl">Transom - Notes</span>
+          <span class="f-val f-val-tall">{{ TRANSOM_NOTES }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 & 04. Assessment + Photo -->
+    <div class="assess-row">
+      <div class="assess-half">
+        <div class="sec-bar">03. Assessment &amp; Severity</div>
+        <div class="assess-body">
+          <div>
+            <span class="f-lbl">Technical Notes</span>
+            <span class="f-val f-val-tall2">{{ TECHNICAL_NOTES }}</span>
+          </div>
+          <div class="score-grid">
+            <div>
+              <span class="f-lbl">Assigned Priority</span>
+              <span class="f-val f-val-center">{{ PRIORITY }}</span>
+            </div>
+            <div>
+              <span class="f-lbl">Evaluation Score</span>
+              <span class="f-val f-val-center">{{ EVALUATION_SCORE }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="assess-half">
+        <div class="sec-bar">04. Field Photo / Evidence</div>
+        <div class="photo-body">{{ PHOTO }}</div>
+      </div>
+    </div>
+
+    <!-- Component Inventory -->
+    <div class="sec-bar">Component Inventory</div>
+    <div class="comp-grid">
+
+      <!-- Left col -->
+      <div class="comp-col">
+        <div class="comp-item">
+          <div class="comp-title">5. Door</div>
+          <div class="comp-fields">
+            <div class="cf-narrow">
+              <span class="f-lbl f-lbl-gray">Current Status</span>
+              <span class="f-val">{{ DOOR_CURRENT_STATUS }}</span>
+            </div>
+            <div class="cf-wide">
+              <span class="f-lbl f-lbl-gray">Recommended Action</span>
+              <span class="f-val">{{ DOOR_RECOMMENDED_ACTION }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-title">7. Hinges</div>
+          <div class="comp-fields">
+            <div class="cf-narrow">
+              <span class="f-lbl f-lbl-gray">Current Status</span>
+              <span class="f-val">{{ HINGES_CURRENT_STATUS }}</span>
+            </div>
+            <div class="cf-wide">
+              <span class="f-lbl f-lbl-gray">Recommended Action</span>
+              <span class="f-val">{{ HINGES_RECOMMENDED_ACTION }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-title">9. Door Handle</div>
+          <div class="comp-fields">
+            <div class="cf-narrow">
+              <span class="f-lbl f-lbl-gray">Current Status</span>
+              <span class="f-val">{{ DOOR_HANDLE_CURRENT_STATUS }}</span>
+            </div>
+            <div class="cf-wide">
+              <span class="f-lbl f-lbl-gray">Recommended Action</span>
+              <span class="f-val">{{ DOOR_HANDLE_RECOMMENDED_ACTION }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right col -->
+      <div class="comp-col">
+        <div class="comp-item">
+          <div class="comp-title">6. Frame</div>
+          <div class="comp-fields">
+            <div class="cf-narrow">
+              <span class="f-lbl f-lbl-gray">Current Status</span>
+              <span class="f-val">{{ FRAME_CURRENT_STATUS }}</span>
+            </div>
+            <div class="cf-wide">
+              <span class="f-lbl f-lbl-gray">Recommended Action</span>
+              <span class="f-val">{{ FRAME_RECOMMENDED_ACTION }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-title">8. Transom</div>
+          <div class="comp-fields">
+            <div class="cf-narrow">
+              <span class="f-lbl f-lbl-gray">Current Status</span>
+              <span class="f-val">{{ TRANSOM_CURRENT_STATUS }}</span>
+            </div>
+            <div class="cf-wide">
+              <span class="f-lbl f-lbl-gray">Recommended Action / Function</span>
+              <span class="f-val">{{ TRANSOM_RECOMMENDED_ACTION }} / {{ TRANSOM_FUNCTION }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-title">10. Automatic Closing Arm</div>
+          <div class="comp-fields">
+            <div class="cf-narrow">
+              <span class="f-lbl f-lbl-gray">Current Status</span>
+              <span class="f-val">{{ AUTOMATIC_CLOSING_ARM_CURRENT_STATUS }}</span>
+            </div>
+            <div class="cf-wide">
+              <span class="f-lbl f-lbl-gray">Date of Preparation</span>
+              <span class="f-val">{{ DATE_OF_PREPARATION }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /comp-grid -->
+  </div><!-- /body-wrap -->
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="foot-left">
+      <div class="foot-brand">KAPTIVE C&amp;P</div>
+      <div>700 S Flower St. Suite 1000</div>
+      <div>Los Angeles, CA 90017</div>
+      <div>License #1031892</div>
+    </div>
+    <div class="foot-right">
+      <div>www.kaptivecp.com</div>
+      <div>Date of Preparation: {{ DATE_OF_PREPARATION }}</div>
+    </div>
+  </footer>
+
+</div><!-- /card -->
 </body>
 </html>
