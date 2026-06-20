@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ ID_DOOR }}_Historic Door Registration Card - KAPTIVE C&P</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            body { background-color: white; -webkit-print-color-adjust: exact; }
+            .no-print { display: none; }
+            .print-border { border-color: black !important; border-width: 1px !important; }
+            .shadow-lg { box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans p-4 md:p-8">
+
+    <!-- Main Form Container -->
+    <div class="max-w-5xl mx-auto bg-white p-8 shadow-lg print-border border border-gray-300">
+        
+        <!-- Header Section (Technical Title Block) -->
+        <header class="border-2 border-[#0a3a70] print:border-black mb-6 flex flex-col">
+            <!-- Row 1: Titles & Logo -->
+            <div class="flex flex-col md:flex-row border-b-2 border-[#0a3a70] print:border-black">
+                <!-- Titles -->
+                <div class="flex-1 p-4 flex flex-col justify-center">
+                    <h1 class="text-2xl md:text-3xl font-black uppercase tracking-widest text-[#0a3a70] print:text-black leading-tight">Conservation Data Sheet</h1>
+                    <h2 class="text-lg font-bold uppercase text-[#4a4c50] print:text-gray-700 tracking-wider">As-Built</h2>
+                    <div class="mt-2">
+                        <h3 class="text-sm font-bold uppercase text-[#0a3a70] print:text-black bg-gray-100 print:bg-gray-200 inline-block px-3 py-1 border border-[#0a3a70] print:border-black">Historic Door Registration Card</h3>
+                    </div>
+                </div>
+                <!-- Logo -->
+                <div class="w-full md:w-64 border-t-2 md:border-t-0 md:border-l-2 border-[#0a3a70] print:border-black p-4 flex items-center justify-center bg-white">
+                    {{ LOGO }}
+                </div>
+            </div>
+
+            <!-- Row 2: Project Info & Element ID -->
+            <div class="flex flex-col md:flex-row">
+                <!-- Project details -->
+                <div class="flex-1 grid grid-cols-1 md:grid-cols-3 divide-y-2 md:divide-y-0 md:divide-x-2 divide-[#0a3a70] print:divide-black border-b-2 md:border-b-0 md:border-r-2 border-[#0a3a70] print:border-black">
+                    <div class="p-3 flex flex-col justify-center bg-gray-50 print:bg-transparent">
+                        <label class="text-[10px] font-bold uppercase text-[#0a3a70] print:text-black leading-none mb-1">Project</label>
+                        <span class="font-bold text-sm text-gray-900 uppercase">{{ PROJECT_NAME }}</span>
+                    </div>
+                    <div class="p-3 flex flex-col justify-center bg-gray-50 print:bg-transparent">
+                        <label class="text-[10px] font-bold uppercase text-[#0a3a70] print:text-black leading-none mb-1">General Contractor</label>
+                        <span class="font-bold text-sm text-gray-900 uppercase">{{ GENERAL_CONTRACTOR }}</span>
+                    </div>
+                    <div class="p-3 flex flex-col justify-center bg-gray-50 print:bg-transparent">
+                        <label class="text-[10px] font-bold uppercase text-[#0a3a70] print:text-black leading-none mb-1">Subcontractor</label>
+                        <span class="font-bold text-sm text-gray-900 uppercase">{{ SUBCONTRACTOR }}</span>
+                    </div>
+                </div>
+                <!-- Element ID -->
+                <div class="w-full md:w-64 p-3 bg-[#0a3a70]/10 print:bg-gray-100 flex items-center justify-between">
+                    <label class="text-xs font-black uppercase text-[#0a3a70] print:text-black mr-2">Element ID</label>
+                    <div class="flex items-center text-lg font-bold bg-white border-2 border-[#0a3a70] print:border-black px-2 py-1 w-32 shadow-inner">
+                        <span class="text-[#0a3a70] print:text-black font-bold uppercase">{{ ID_DOOR }}</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- START TABULAR BODY -->
+        <div class="border-2 border-[#0a3a70] print:border-black flex flex-col mb-4">
+
+            <!-- 01. LOCATION -->
+            <div class="bg-[#0a3a70] print:bg-gray-200 text-white print:text-black p-1 border-b-2 border-[#0a3a70] print:border-black px-3">
+                <h4 class="font-bold uppercase text-sm tracking-wide">01. Location &amp; Site Logic</h4>
+            </div>
+            <div class="grid grid-cols-2 divide-x-2 divide-[#0a3a70] print:divide-black border-b-2 border-[#0a3a70] print:border-black bg-gray-50 print:bg-white">
+                <div class="p-3">
+                    <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Inspection Level</label>
+                    <p class="w-full pb-1 text-sm border-b border-gray-400">{{ INSPECTION_LEVEL }}</p>
+                </div>
+                <div class="p-3">
+                    <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Room/Area</label>
+                    <p class="w-full pb-1 text-sm border-b border-gray-400">{{ ROOM_NAME }}</p>
+                </div>
+            </div>
+
+            <!-- 02. FIELD NOTES & PATHOLOGIES -->
+            <div class="bg-[#0a3a70] print:bg-gray-200 text-white print:text-black p-1 border-b-2 border-[#0a3a70] print:border-black px-3">
+                <h4 class="font-bold uppercase text-sm tracking-wide">02. Field Notes &amp; Pathologies</h4>
+            </div>
+            <div class="flex flex-col md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-[#0a3a70] print:divide-black border-b-2 border-[#0a3a70] print:border-black">
+                <!-- Attributes -->
+                <div class="w-full md:w-1/3 grid grid-cols-2 divide-x border-t-0 border-gray-300 bg-gray-50 print:bg-white">
+                    <div class="p-3 flex flex-col justify-center">
+                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Access Status</label>
+                        <p class="w-full pb-1 text-sm border-b border-gray-400">{{ ACCESS_STATUS }}</p>
+                    </div>
+                    <div class="p-3 flex flex-col justify-center">
+                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Door Origin</label>
+                        <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_ORIGIN }}</p>
+                    </div>
+                    <div class="p-3 flex flex-col justify-center border-t border-gray-300">
+                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Material</label>
+                        <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_MATERIAL }}</p>
+                    </div>
+                    <div class="p-3 flex flex-col justify-center border-t border-gray-300">
+                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Door Type</label>
+                        <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_TYPE }}</p>
+                    </div>
+                </div>
+                <!-- Notes -->
+                <div class="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x border-gray-300 bg-white">
+                    <div class="p-3">
+                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Door - Notes</label>
+                        <p class="w-full min-h-[6rem] text-sm border-b border-gray-400">{{ DOOR_NOTES }}</p>
+                    </div>
+                    <div class="p-3">
+                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Frame - Notes</label>
+                        <p class="w-full min-h-[6rem] text-sm border-b border-gray-400">{{ FRAME_NOTES }}</p>
+                    </div>
+                    <div class="p-3">
+                        <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Transom - Notes</label>
+                        <p class="w-full min-h-[6rem] text-sm border-b border-gray-400">{{ TRANSOM_NOTES }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 03 & 04. ASSESSMENT & EVIDENCE -->
+            <div class="flex flex-col md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-[#0a3a70] print:divide-black border-b-2 border-[#0a3a70] print:border-black">
+                <div class="w-full md:w-1/2 flex flex-col">
+                    <div class="bg-[#0a3a70] print:bg-gray-200 text-white print:text-black p-1 border-b-2 border-[#0a3a70] print:border-black px-3">
+                        <h4 class="font-bold uppercase text-sm tracking-wide">03. Assessment &amp; Severity</h4>
+                    </div>
+                    <div class="p-3 flex-1 flex flex-col gap-2 bg-gray-50 print:bg-white">
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Technical Notes</label>
+                            <p class="w-full min-h-[4rem] text-sm border-b border-gray-400">{{ TECHNICAL_NOTES }}</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mt-auto pt-2">
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Assigned Priority</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400 text-center font-bold">{{ PRIORITY }}</p>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-[#0a3a70] print:text-black mb-1">Evaluation Score</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400 text-center font-bold">{{ EVALUATION_SCORE }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 flex flex-col">
+                    <div class="bg-[#0a3a70] print:bg-gray-200 text-white print:text-black p-1 border-b-2 border-[#0a3a70] print:border-black px-3">
+                        <h4 class="font-bold uppercase text-sm tracking-wide">04. Field Photo / Evidence</h4>
+                    </div>
+                    <div class="p-2 flex-1 bg-white">
+                        {{ PHOTO }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMPONENTS 5-10 -->
+            <div class="bg-[#0a3a70] print:bg-gray-200 text-white print:text-black p-1 border-b-2 border-[#0a3a70] print:border-black px-3">
+                <h4 class="font-bold uppercase text-sm tracking-wide">Component Inventory</h4>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 divide-y-2 md:divide-y-0 md:divide-x-2 divide-[#0a3a70] print:divide-black">
+                
+                <!-- Left Col -->
+                <div class="flex flex-col divide-y-2 divide-[#0a3a70] print:divide-black">
+
+                    <!-- 5. Door -->
+                    <div class="p-3 bg-white">
+                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">5. Door</h5>
+                        <div class="flex gap-4">
+                            <div class="w-1/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_CURRENT_STATUS }}</p>
+                            </div>
+                            <div class="w-2/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Recommended Action</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_RECOMMENDED_ACTION }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. Hinges -->
+                    <div class="p-3 bg-white">
+                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">7. Hinges</h5>
+                        <div class="flex gap-4">
+                            <div class="w-1/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ HINGES_CURRENT_STATUS }}</p>
+                            </div>
+                            <div class="w-2/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Recommended Action</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ HINGES_RECOMMENDED_ACTION }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 9. Door Handle -->
+                    <div class="p-3 bg-white">
+                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">9. Door Handle</h5>
+                        <div class="flex gap-4">
+                            <div class="w-1/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_HANDLE_CURRENT_STATUS }}</p>
+                            </div>
+                            <div class="w-2/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Recommended Action</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DOOR_HANDLE_RECOMMENDED_ACTION }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Col -->
+                <div class="flex flex-col divide-y-2 divide-[#0a3a70] print:divide-black border-t-2 md:border-t-0 border-[#0a3a70] print:border-black">
+
+                    <!-- 6. Frame -->
+                    <div class="p-3 bg-white">
+                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">6. Frame</h5>
+                        <div class="flex gap-4">
+                            <div class="w-1/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ FRAME_CURRENT_STATUS }}</p>
+                            </div>
+                            <div class="w-2/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Recommended Action</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ FRAME_RECOMMENDED_ACTION }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. Transom -->
+                    <div class="p-3 bg-white">
+                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">8. Transom</h5>
+                        <div class="flex gap-4">
+                            <div class="w-1/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ TRANSOM_CURRENT_STATUS }}</p>
+                            </div>
+                            <div class="w-2/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Recommended Action / Function</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ TRANSOM_RECOMMENDED_ACTION }} / {{ TRANSOM_FUNCTION }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 10. Automatic Closing Arm -->
+                    <div class="p-3 bg-white">
+                        <h5 class="font-black uppercase text-xs text-[#0a3a70] print:text-black mb-2">10. Automatic Closing Arm</h5>
+                        <div class="flex gap-4">
+                            <div class="w-1/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Current Status</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ AUTOMATIC_CLOSING_ARM_CURRENT_STATUS }}</p>
+                            </div>
+                            <div class="w-2/3">
+                                <label class="block text-[9px] font-bold uppercase text-gray-500 mb-1">Date of Preparation</label>
+                                <p class="w-full pb-1 text-sm border-b border-gray-400">{{ DATE_OF_PREPARATION }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- END TABULAR BODY -->
+
+        <!-- Footer -->
+        <footer class="mt-4 pt-2 border-t-2 border-[#0a3a70] print:border-black flex justify-between items-end text-sm">
+            <div class="text-xs text-gray-500">
+                <p class="font-bold text-[#0a3a70]">KAPTIVE C&amp;P</p>
+                <p>700 S Flower St. Suite 1000</p>
+                <p>Los Angeles, CA 90017</p>
+                <p>License #1031892</p>
+            </div>
+            <div class="text-xs text-gray-400 italic text-right">
+                <p>www.kaptivecp.com</p>
+                <p class="mt-1">Date of Preparation: {{ DATE_OF_PREPARATION }}</p>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
