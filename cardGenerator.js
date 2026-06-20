@@ -250,11 +250,22 @@ async function generateCards({
     const pdfPath = path.join(pdfDir, `${doorId}_card.pdf`);
 
     await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
+
+    // Medir la altura real del contenido renderizado
+    const contentHeight = await page.evaluate(() => document.body.scrollHeight);
+    // Altura de una página Letter en px a 96dpi = 1056px. Si el contenido es mayor,
+    // calculamos la escala necesaria para que quepa exactamente en 1 página.
+    const pageHeightPx = 1056; // Letter 11in × 96dpi
+    const scale = contentHeight > pageHeightPx
+      ? Math.max(0.1, Math.min(1, pageHeightPx / contentHeight))
+      : 1;
+
     await page.pdf({
       path:            pdfPath,
       format:          "Letter",
       printBackground: true,
-      margin: { top: "10mm", bottom: "10mm", left: "10mm", right: "10mm" },
+      scale:           scale,
+      margin: { top: "8mm", bottom: "8mm", left: "8mm", right: "8mm" },
     });
     console.log(`✓ PDF   ${doorId}`);
   }

@@ -309,6 +309,10 @@
   @media print {
     body { background: #fff; padding: 0; }
     .card { box-shadow: none; max-width: 100%; }
+    /* Evitar que cualquier sección se corte entre páginas */
+    header, .body-wrap, footer,
+    .sec-bar, .loc-row, .notes-row,
+    .assess-row, .comp-grid, .comp-item { page-break-inside: avoid; }
   }
 </style>
 </head>
