@@ -4,13 +4,14 @@
  * a PDF con Playwright y los empaqueta en un ZIP en memoria.
  */
 
-const XLSX       = require("xlsx");
-const axios      = require("axios");
-const archiver   = require("archiver");
+const XLSX         = require("xlsx");
+const axios        = require("axios");
+const archiver     = require("archiver");
 const { chromium } = require("playwright");
-const fs         = require("fs");
-const path       = require("path");
-const os         = require("os");
+const fs           = require("fs");
+const path         = require("path");
+const os           = require("os");
+const http         = require("http");
 
 // ── Extensiones de imagen soportadas ─────────────────────────────────────────
 const IMAGE_EXTS = new Set([".jpg", ".jpeg", ".png", ".gif", ".webp"]);
@@ -207,22 +208,42 @@ async function generateCards({
   const pdfDir = path.join(tmpDir, "pdf");
   fs.mkdirSync(pdfDir);
 
-  const browser = await chromium.launch();
-  const page    = await browser.newPage();
+  // Levantar un servidor HTTP local para servir los HTMLs
+  // (file:// está bloqueado en Chromium headless dentro de contenedores)
+  const server = http.createServer((req, res) => {
+    const filePath = path.join(htmlDir, req.url.slice(1)); // quitar el / inicial
+    if (!fs.existsSync(filePath)) { res.writeHead(404); res.end(); return; }
+    const html = fs.readFileSync(filePath, "utf8");
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+    res.end(html);
+  });
 
-  for (const { doorId, filePath } of htmlFiles) {
-    await page.goto(`file://${filePath}`, { waitUntil: "networkidle" });
+  // Puerto aleatorio disponible
+  await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
+  const { port } = server.address();
+  console.log(`🌐  Servidor HTML local en puerto ${port}`);
+
+  const browser = await chromium.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
+  const page = await browser.newPage();
+
+  for (const { doorId } of htmlFiles) {
+    const url     = `http://127.0.0.1:${port}/${doorId}_card.html`;
     const pdfPath = path.join(pdfDir, `${doorId}_card.pdf`);
+
+    await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
     await page.pdf({
-      path:             pdfPath,
-      format:           "Letter",
-      printBackground:  true,
+      path:            pdfPath,
+      format:          "Letter",
+      printBackground: true,
       margin: { top: "10mm", bottom: "10mm", left: "10mm", right: "10mm" },
     });
     console.log(`✓ PDF   ${doorId}`);
   }
 
   await browser.close();
+  await new Promise(resolve => server.close(resolve));
 
   // 5. Empaquetar PDFs en un ZIP en memoria
   const zipBuffer = await new Promise((resolve, reject) => {
