@@ -251,20 +251,30 @@ async function generateCards({
 
     await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
 
-    // Medir la altura real del contenido renderizado
-    const contentHeight = await page.evaluate(() => document.body.scrollHeight);
-    // Altura de una página Letter en px a 96dpi = 1056px. Si el contenido es mayor,
-    // calculamos la escala necesaria para que quepa exactamente en 1 página.
-    const pageHeightPx = 1056; // Letter 11in × 96dpi
-    const scale = contentHeight > pageHeightPx
-      ? Math.max(0.1, Math.min(1, pageHeightPx / contentHeight))
-      : 1;
+    // Inyectar CSS para forzar una sola página: escalar el .card para que
+    // quepa exactamente en el viewport de impresión sin overflow.
+    await page.evaluate(() => {
+      const card = document.querySelector(".card");
+      if (!card) return;
+      // Ancho Letter con márgenes de 8mm a cada lado ≈ 780px a 96dpi
+      const printW = 780;
+      const printH = 1020; // Letter 11in - 16mm márgenes
+      const scaleX = printW  / card.scrollWidth;
+      const scaleH = printH  / card.scrollHeight;
+      const scale  = Math.min(scaleX, scaleH, 1); // nunca agrandar
+      if (scale < 1) {
+        card.style.transformOrigin = "top left";
+        card.style.transform       = `scale(${scale})`;
+        card.style.width           = `${100 / scale}%`;
+        document.body.style.overflow = "hidden";
+        document.body.style.height   = `${card.scrollHeight * scale}px`;
+      }
+    });
 
     await page.pdf({
       path:            pdfPath,
       format:          "Letter",
       printBackground: true,
-      scale:           scale,
       margin: { top: "8mm", bottom: "8mm", left: "8mm", right: "8mm" },
     });
     console.log(`✓ PDF   ${doorId}`);

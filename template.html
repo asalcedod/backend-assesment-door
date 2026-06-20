@@ -305,14 +305,31 @@
   .foot-brand { font-weight: 700; color: #0a3a70; }
   .foot-right { font-size: 11px; color: #9ca3af; font-style: italic; text-align: right; line-height: 1.7; }
 
+  /* ── Una sola página garantizada ───────────────────────── */
+  html, body {
+    height: 100%;
+  }
+  .card {
+    /* El card debe contener todo incluyendo el footer */
+    display: flex;
+    flex-direction: column;
+  }
+  .body-wrap {
+    flex: 1;
+  }
+  footer {
+    margin-top: auto;
+  }
+
   /* ── Print ─────────────────────────────────────────────── */
   @media print {
-    body { background: #fff; padding: 0; }
-    .card { box-shadow: none; max-width: 100%; }
-    /* Evitar que cualquier sección se corte entre páginas */
+    html, body { background: #fff; padding: 0; margin: 0; height: auto; }
+    .card { box-shadow: none; max-width: 100%; page-break-inside: avoid; }
     header, .body-wrap, footer,
     .sec-bar, .loc-row, .notes-row,
-    .assess-row, .comp-grid, .comp-item { page-break-inside: avoid; }
+    .assess-row, .comp-grid, .comp-item { page-break-inside: avoid; break-inside: avoid; }
+    /* Forzar que no haya salto después del card */
+    .card { page-break-after: avoid; break-after: avoid; }
   }
 </style>
 </head>
